@@ -1,0 +1,5 @@
+C:\Users\phlane\Documents\Visual Studio 2013\Projects\FieldEngineeringIPLog\FieldEngineeringIPLog\bin\Release\FieldEngineeringIPLog.exe
+C:\Users\phlane\Documents\Visual Studio 2013\Projects\FieldEngineeringIPLog\FieldEngineeringIPLog\bin\Release\FieldEngineeringIPLog.pdb
+C:\Users\phlane\Documents\Visual Studio 2013\Projects\FieldEngineeringIPLog\FieldEngineeringIPLog\obj\x86\Release\FieldEngineeringIPLog.csprojResolveAssemblyReference.cache
+C:\Users\phlane\Documents\Visual Studio 2013\Projects\FieldEngineeringIPLog\FieldEngineeringIPLog\obj\x86\Release\FieldEngineeringIPLog.exe
+C:\Users\phlane\Documents\Visual Studio 2013\Projects\FieldEngineeringIPLog\FieldEngineeringIPLog\obj\x86\Release\FieldEngineeringIPLog.pdb
