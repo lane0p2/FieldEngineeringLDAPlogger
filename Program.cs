@@ -378,7 +378,7 @@ namespace FieldEngineeringIPLog
                 File.Create(OutputFileName).Close();
                 writer = new StreamWriter(OutputFileName);
                 writer.AutoFlush = true;
-                writer.WriteLine("Domain Controller;DCSite;ClientName;IPandPort;Time;Account;Starting Node;Filter;Search Scope;Attribute Selection;Server Controls;Visited Entries;Returned Entries");
+                writer.WriteLine('\u0022' + "LDAPServer" + '\u0022' + "," + '\u0022' + "LDAPServerSite" + '\u0022' + "," + '\u0022' + "ClientName" + '\u0022' + "," + '\u0022' + "TimeGenerated" + '\u0022' + "," + '\u0022' + "ClientIP" + '\u0022' + "," + '\u0022' + "ClientPort" + '\u0022' + "," + '\u0022' + "UserName" + '\u0022' + "," + '\u0022' + "StartingNode" + '\u0022' + "," + '\u0022' + "Filter" + '\u0022' + "," + '\u0022' + "SearchScope" + '\u0022' + "," + '\u0022' + "AttributeSelection" + '\u0022' + "," + '\u0022' + "ServerControls" + '\u0022' + "," + '\u0022' + "VisitedEntries" + '\u0022' + "," + '\u0022' + "ReturnedEntries" + '\u0022' + "," + '\u0022' + "UsedIndexes" + '\u0022' + "," + '\u0022' + "PagesReferenced" + '\u0022' + "," + '\u0022' + "PagesReadFromDisk" + '\u0022' + "," + '\u0022' + "PagesPreReadFromDisk" + '\u0022' + "," + '\u0022' + "CleanPagesModified" + '\u0022' + "," + '\u0022' + "DirtyPagesModified" + '\u0022' + "," + '\u0022' + "SearchTimeMS" + '\u0022' + "," + '\u0022' + "AttributesPreventingOptimization" + '\u0022');
 
                 Console.WriteLine("Creating error file");
                 File.Create("FieldEngineeringIPErrorLog.txt").Close();
@@ -504,25 +504,27 @@ namespace FieldEngineeringIPLog
                         if (st.ToUpper().Contains("CLIENT:"))
                         {
                             string RawIPandPort = message[count + 1].Replace("\n", "").Trim().ToString();
+                            string Port = RawIPandPort.Split(new char[] { ':' }).Last().Trim().ToString();
+                            string IP = RawIPandPort.Replace(':'+ Port, "");
                             string IPString = ReturnNiceIP(message[count + 1].Replace("\n", "").Trim().ToString());
                             IPList.Add(IPString);
                             string ResolvedIP = ResolveIPToName(IPString);
-                            csvOutString = ResolvedIP + ";" + RawIPandPort + ";" + stack.Peek().TimeGenerated.ToLongTimeString() + " " + stack.Peek().TimeGenerated.ToShortDateString() + ";" + stack.Peek().UserName.ToString() + ";";
+                            csvOutString = '\u0022' + ResolvedIP + '\u0022' + "," + '\u0022' + stack.Peek().TimeGenerated.ToShortDateString() + " " + stack.Peek().TimeGenerated.ToLongTimeString() +  '\u0022' + "," + '\u0022' + IP  + '\u0022' + "," + '\u0022' + Port + '\u0022' + ","  + '\u0022' +  stack.Peek().UserName.ToString() + '\u0022' + ",";
                         }
 
                         if (st.ToUpper().Contains("STARTING NODE"))
                         {
-                            csvOutString += message[count + 1].Replace("\n", "").Trim() + ";";
+                            csvOutString += '\u0022' + message[count + 1].Replace("\n", "").Trim() + '\u0022' + ",";
                         }
 
                         if (st.ToUpper().Contains("FILTER"))
                         {
-                            csvOutString += message[count + 1].Replace("\n", "").Trim() + ";";
+                            csvOutString += '\u0022' + message[count + 1].Replace("\n", "").Trim() + '\u0022' + ",";
                         }
 
                         if (st.ToUpper().Contains("SEARCH SCOPE"))
                         {
-                            csvOutString += message[count + 1].Replace("\n", "").Trim() + ";";
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Trim() + '\u0022' + ",";
                         }
 
                         if (st.ToUpper().Contains("ATTRIBUTE SELECTION"))
@@ -533,7 +535,7 @@ namespace FieldEngineeringIPLog
                             else
                             { newString = message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Replace(" ","").Trim(); }
 
-                            csvOutString += newString + ";";
+                            csvOutString += '\u0022' + newString + '\u0022' + ",";
                         }
 
                         if (st.ToUpper().Contains("SERVER CONTROLS"))
@@ -542,26 +544,66 @@ namespace FieldEngineeringIPLog
                             if (string.IsNullOrWhiteSpace(message[count + 1].Replace("\n", "").Trim()))
                             { newString = "none"; }
                             else
-                            { newString = message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim(); }
+                            { newString =  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim(); }
 
-                            csvOutString += newString + ";";
+                            csvOutString += '\u0022' + newString + '\u0022' + ",";
                         }
 
                         if (st.ToUpper().Contains("VISITED ENTRIES"))
                         {
-                            csvOutString += message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + ";";
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
                         }
 
                         if (st.ToUpper().Contains("RETURNED ENTRIES"))
                         {
-                            csvOutString += message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + ";";
-                        }                      
-                       
-                    count = count + 1;                            
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        if (st.ToUpper().Contains("USED INDEXES"))
+                        {
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        if (st.ToUpper().Contains("PAGES REFERENCED"))
+                        {
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        if (st.ToUpper().Contains("PAGES READ FROM DISK"))
+                        {
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        if (st.ToUpper().Contains("PAGES PREREAD FROM DISK"))
+                        {
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        if (st.ToUpper().Contains("CLEAN PAGES MODIFIED"))
+                        {
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        if (st.ToUpper().Contains("DIRTY PAGES MODIFIED"))
+                        {
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        if (st.ToUpper().Contains("SEARCH TIME (MS)"))
+                        {
+                            csvOutString += '\u0022' + message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        if (st.ToUpper().Contains("ATTRIBUTES PREVENTING OPTIMIZATION"))
+                        {
+                            csvOutString += '\u0022' +  message[count + 1].Replace("\n", "").Replace("\t", "").Replace("\r", "").Trim() + '\u0022' + ",";
+                        }
+
+                        count = count + 1;                            
                         
                     }
 
-                    writer.WriteLine(svr + ";" + siteName + ";" + csvOutString);
+                    writer.WriteLine('\u0022' + svr + '\u0022' + "," + '\u0022' + siteName + '\u0022' + "," + csvOutString);
                     csvOutString = string.Empty;
                     stack.Pop();
                 }

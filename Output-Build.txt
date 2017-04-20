@@ -1,0 +1,4 @@
+﻿1>------ Rebuild All started: Project: FieldEngineeringIPLog, Configuration: Debug x86 ------
+1>C:\Users\robingra\Downloads\ldaplogger-28755\FieldEngineeringIPLog\Program.cs(30,21,30,28): warning CS0414: The field 'Program.verbose' is assigned but its value is never used
+1>  FieldEngineeringIPLog -> C:\Users\robingra\Downloads\ldaplogger-28755\FieldEngineeringIPLog\bin\Debug\FieldEngineeringIPLog.exe
+========== Rebuild All: 1 succeeded, 0 failed, 0 skipped ==========
