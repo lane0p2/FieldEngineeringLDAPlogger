@@ -1,0 +1,4 @@
+C:\Users\robingra\Downloads\ldaplogger-28755\FieldEngineeringIPLog\bin\Debug\FieldEngineeringIPLog.exe
+C:\Users\robingra\Downloads\ldaplogger-28755\FieldEngineeringIPLog\bin\Debug\FieldEngineeringIPLog.pdb
+C:\Users\robingra\Downloads\ldaplogger-28755\FieldEngineeringIPLog\obj\x86\Debug\FieldEngineeringIPLog.exe
+C:\Users\robingra\Downloads\ldaplogger-28755\FieldEngineeringIPLog\obj\x86\Debug\FieldEngineeringIPLog.pdb
